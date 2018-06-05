@@ -38,8 +38,6 @@ socket.on('newWeatherMessage', function (message) {
   li.append(a);
   jQuery('#messages').append(li);
   console.log(message.currentWeather);
-  // li.text(`${message.currentWeather}`)
-  // jQuery('#messages').append(li);
 });
 
 jQuery('#message-form').on('submit', function (e) {
@@ -73,7 +71,6 @@ locationButton.on('click', function () {
       socket.emit('createLocationMessage', {
         latitude: position.coords.latitude,
         longitude: position.coords.longitude
-        // currentWeather: ''
       });
       messageTextbox.val('');
     }
