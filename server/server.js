@@ -3,12 +3,14 @@ const http = require('http');
 const express = require('express');
 const socketIO = require('socket.io');
 
-const {generateMessage, generateLocationMessage} = require('./utils/message');
+const {generateMessage, generateLocationMessage, generateWeatherMessage} = require('./utils/message');
+
 const publicPath = path.join(__dirname, '../public');
 const port = process.env.PORT || 3000;
 var app = express();
 var server = http.createServer(app);
 var io = socketIO(server);
+var currentWeather;
 
 app.use(express.static(publicPath));
 
@@ -27,6 +29,10 @@ io.on('connection', (socket) => {
 
   socket.on('createLocationMessage', (coords) => {
     io.emit('newLocationMessage', generateLocationMessage('Admin', coords.latitude, coords.longitude));
+  });
+
+  socket.on('createWeatherMessage', (coords) => {
+    io.emit('newWeatherMessage', generateWeatherMessage('Admin', coords.latitude, coords.longitude));
   });
 
   socket.on('disconnect', () => {

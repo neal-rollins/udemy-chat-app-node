@@ -1,4 +1,5 @@
 var moment = require('moment');
+const weather = require('./weather');
 
 var generateMessage = (from, text) => {
   return {
@@ -15,4 +16,36 @@ var generateLocationMessage = (from, latitude, longitude) => {
     createdAt: moment().valueOf()
   };
 };
-module.exports = {generateMessage, generateLocationMessage};
+
+var generateWeatherMessage = (from, latitude, longitude) => {
+  var currentWeather;
+  weather.getWeather(latitude, longitude, (errorMessage, weatherResults) => {
+        if (errorMessage) {
+          // return {
+          //   from,
+          //   currentWeather: errorMessage,
+          //   createdAt: moment().valueOf()
+          // };
+          currentWeather = errorMessage;
+          console.log(errorMessage);
+        } else {
+          // return {
+          //   from,
+          //   url: `https://api.forecast.io/forecast/4a04d1c42fd9d32c97a2c291a32d5e2d/${latitude},${longitude}`,
+          //   currentWeather: `It's currently ${weatherResults.temperature}. It feels like ${weatherResults.apparentTemperature}.`,
+          //   createdAt: moment().valueOf()
+          // };
+          currentWeather = `It's currently ${weatherResults.temperature}. It feels like ${weatherResults.apparentTemperature}.`;
+          console.log(`It's currently ${weatherResults.temperature}. It feels like ${weatherResults.apparentTemperature}.`);
+          console.log(currentWeather);
+        }
+      });
+  return {
+    from,
+    url: `https://api.forecast.io/forecast/4a04d1c42fd9d32c97a2c291a32d5e2d/${latitude},${longitude}`,
+    currentWeather,
+    createdAt: moment().valueOf()
+  };
+};
+
+module.exports = {generateMessage, generateLocationMessage, generateWeatherMessage};
