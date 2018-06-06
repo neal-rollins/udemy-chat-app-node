@@ -18,21 +18,16 @@ var generateLocationMessage = (from, latitude, longitude) => {
 };
 
 var generateWeatherMessage = (from, latitude, longitude) => {
-  var currentWeather;
-  weather.getWeather(latitude, longitude, (errorMessage, weatherResults) => {
-        if (errorMessage) {
-          currentWeather = errorMessage;
-          console.log(errorMessage);
-        } else {
-          currentWeather = `It's currently ${weatherResults.temperature}. It feels like ${weatherResults.apparentTemperature}.`;
-          console.log(`It's currently ${weatherResults.temperature}. It feels like ${weatherResults.apparentTemperature}.`);
-          console.log(currentWeather);
-        }
-      });
   return {
     from,
     url: `https://api.forecast.io/forecast/4a04d1c42fd9d32c97a2c291a32d5e2d/${latitude},${longitude}`,
-    currentWeather,
+    // currentTemp: weather.getWeather(latitude, longitude, (errorMessage, weatherResults) => {
+    //       if (errorMessage) {
+    //         console.log(errorMessage);
+    //       } else {
+    //         console.log(`It's currently ${weatherResults.temperature}. It feels like ${weatherResults.apparentTemperature}.`);
+    //       }
+    //     }),
     createdAt: moment().valueOf()
   };
 };
