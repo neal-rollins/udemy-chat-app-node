@@ -4,11 +4,6 @@
   room: 'Test Room'
 }]
 
-//addUser(id, name, room)
-//removeUser(id)
-//getUser(id)
-//getUserList(room)
-
 class Users {
   constructor () {
     this.users = [];
